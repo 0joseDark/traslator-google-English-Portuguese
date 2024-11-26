@@ -1,3 +1,4 @@
+[english version](https://github.com/0joseDark/traslator-google-English-Portuguese-Indian/blob/main/English-README.md)
 # traslator-google-English-Portuguese-Indian
  Segue um código Python para criar um **Tradutor de Arquivos de Texto com Interface Gráfica** no Windows 10. Este tradutor permite:
 
