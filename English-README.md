@@ -1,5 +1,5 @@
 # translator-google-English-Portuguese-Indian
-Here is a Python code to create a **Text File Translator with Graphical Interface** on Windows 10. This translator allows you to:
+**Text File Translator with Graphical Interface** on Windows 10. This translator allows you to:
 
 1. Select the **input folder** and the **output folder**.
 2. Choose the **first language** (source) and the **second language** (target) from a list of options: *English, European Portuguese, Indian*.
