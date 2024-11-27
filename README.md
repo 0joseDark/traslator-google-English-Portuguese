@@ -1,5 +1,6 @@
 - ![familia](https://github.com/0joseDark/traslator-google-English-Portuguese-Indian/blob/main/imadens/familia-humano-cosendo.jpg)
 - [english version](https://github.com/0joseDark/traslator-google-English-Portuguese-Indian/blob/main/English-README.md)
+- [languages](https://github.com/0joseDark/traslator-google-English-Portuguese-Indian/blob/main/linguas.md)
 - traslator-google-English-Portuguese-Indian
 - **Tradutor de Arquivos de Texto com Interface Gráfica** no Windows 10. Este tradutor permite:
 
