@@ -39,5 +39,5 @@ Instale o módulo `googletrans` antes de executar o código:
 ```bash
 pip install googletrans==4.0.0-rc1
 ```
-
 Com este programa, você pode traduzir arquivos `.txt` entre as línguas disponíveis (Português Europeu, Inglês e Indiano).
+- ![translator](https://github.com/0joseDark/traslator-google-English-Portuguese-Indian/blob/main/imadens/image.jpg)
