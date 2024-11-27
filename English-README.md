@@ -36,3 +36,5 @@ Install the `googletrans` module before running the code:
 
 ```bash
 pip install googletrans==4.0.0-rc1
+
+- ![translator](https://github.com/0joseDark/traslator-google-English-Portuguese-Indian/blob/main/imadens/image.jpg)
