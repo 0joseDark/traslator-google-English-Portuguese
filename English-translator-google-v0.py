@@ -3,8 +3,6 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from tkinter.ttk import Progressbar, Combobox
 from googletrans import Translator
-from PyPDF2 import PdfReader
-import markdown
 
 # Dictionary of supported languages
 LANGUAGES = {
@@ -31,48 +29,109 @@ LANGUAGES = {
     "Yoruba": "yo", "Zulu": "zu"
 }
 
-# Function to translate PDF content to Markdown
-def translate_pdf_to_md():
+# Function to translate text files
+def translate_files():
     input_folder = input_folder_var.get()
     output_folder = output_folder_var.get()
-    source_lang = LANGUAGES[source_lang_var.get()]
-    target_lang = LANGUAGES[target_lang_var.get()]
+    source_lang = LANGUAGES[first_language_var.get()]
+    target_lang = LANGUAGES[second_language_var.get()]
 
     if not input_folder or not output_folder:
-        messagebox.showerror("Error", "Select input and output folders!")
+        messagebox.showerror("Error", "Please select both input and output folders!")
         return
     if source_lang == target_lang:
-        messagebox.showerror("Error", "Choose different languages for translation!")
+        messagebox.showerror("Error", "Source and target languages must be different!")
         return
 
-    pdf_files = [f for f in os.listdir(input_folder) if f.endswith(".pdf")]
-    if not pdf_files:
-        messagebox.showinfo("Info", "No PDF files found in the input folder.")
+    files = [f for f in os.listdir(input_folder) if f.endswith(".txt")]
+    if not files:
+        messagebox.showinfo("Info", "No .txt files found in the input folder.")
         return
 
-    translator = Translator()
-    total_files = len(pdf_files)
+    total_files = len(files)
     progress["value"] = 0
     window.update_idletasks()
 
-    for i, pdf_file in enumerate(pdf_files, start=1):
-        input_path = os.path.join(input_folder, pdf_file)
-        try:
-            reader = PdfReader(input_path)
-            full_text = " ".join(page.extract_text() for page in reader.pages)
-            translated_text = translator.translate(full_text, src=source_lang, dest=target_lang).text
+    translator = Translator()
 
-            markdown_content = markdown.markdown(translated_text)
-            output_file = os.path.join(output_folder, f"{os.path.splitext(pdf_file)[0]}_translated.md")
-            with open(output_file, "w", encoding="utf-8") as md_file:
-                md_file.write(markdown_content)
+    for i, file in enumerate(files, start=1):
+        input_path = os.path.join(input_folder, file)
+        try:
+            with open(input_path, "r", encoding="utf-8") as f:
+                content = f.read()
+
+            translation = translator.translate(content, src=source_lang, dest=target_lang).text
+
+            new_name = f"{i:03d}_translated.txt"
+            output_path = os.path.join(output_folder, new_name)
+
+            with open(output_path, "w", encoding="utf-8") as f:
+                f.write(translation)
 
         except Exception as e:
-            messagebox.showwarning("Warning", f"Error translating {pdf_file}: {e}")
+            messagebox.showwarning("Warning", f"Error translating {file}: {e}")
 
         progress["value"] = (i / total_files) * 100
         window.update_idletasks()
 
-    messagebox.showinfo("Completed", "PDF translation completed!")
+    messagebox.showinfo("Completed", "Translation completed successfully!")
 
-# ... (The rest of the Tkinter UI setup remains the same, just updating function references)
+# Functions to choose input and output folders
+def choose_input_folder():
+    folder = filedialog.askdirectory(title="Select Input Folder")
+    if folder:
+        input_folder_var.set(folder)
+
+def choose_output_folder():
+    folder = filedialog.askdirectory(title="Select Output Folder")
+    if folder:
+        output_folder_var.set(folder)
+
+# Setting up the main window
+window = tk.Tk()
+window.title("Text Translator")
+window.geometry("500x600")
+window.resizable(False, False)
+
+# Variables for folder paths and languages
+input_folder_var = tk.StringVar()
+output_folder_var = tk.StringVar()
+first_language_var = tk.StringVar(value="English")
+second_language_var = tk.StringVar(value="Portuguese")
+
+# User interface
+tk.Label(window, text="Text Translator", font=("Arial", 16)).pack(pady=10)
+tk.Label(window, text="Choose input and output folders:").pack(pady=5)
+
+frame_input = tk.Frame(window)
+frame_input.pack(pady=5)
+input_entry = tk.Entry(frame_input, textvariable=input_folder_var, width=40, state="readonly")
+input_entry.pack(side="left", padx=5)
+input_button = tk.Button(frame_input, text="Input Folder", command=choose_input_folder)
+input_button.pack(side="left", padx=5)
+
+frame_output = tk.Frame(window)
+frame_output.pack(pady=5)
+output_entry = tk.Entry(frame_output, textvariable=output_folder_var, width=40, state="readonly")
+output_entry.pack(side="left", padx=5)
+output_button = tk.Button(frame_output, text="Output Folder", command=choose_output_folder)
+output_button.pack(side="left", padx=5)
+
+tk.Label(window, text="Select Source Language:").pack(pady=5)
+source_language_combo = Combobox(window, values=list(LANGUAGES.keys()), textvariable=first_language_var, state="readonly")
+source_language_combo.pack(pady=5)
+
+tk.Label(window, text="Select Target Language:").pack(pady=5)
+target_language_combo = Combobox(window, values=list(LANGUAGES.keys()), textvariable=second_language_var, state="readonly")
+target_language_combo.pack(pady=5)
+
+progress = Progressbar(window, orient="horizontal", length=400, mode="determinate")
+progress.pack(pady=20)
+
+translate_button = tk.Button(window, text="Translate", command=translate_files)
+translate_button.pack(pady=10)
+
+exit_button = tk.Button(window, text="Exit", command=window.destroy)
+exit_button.pack(pady=5)
+
+window.mainloop()
