@@ -46,3 +46,6 @@ Com este programa, você pode traduzir arquivos `.txt` entre as línguas dispon�
 ```bash
 pip install PyPDF2
 ```
+```bash
+pip install markdown
+```
