@@ -1,5 +1,5 @@
 - ![translator](https://github.com/0joseDark/traslator-google-English-Portuguese-Indian/blob/main/imadens/image.jpg)
-# translator google English Portuguese Indian
+# translator google English Portuguese
 **Text File Translator with Graphical Interface** on Windows 10. This translator allows you to:
 
 1. Select the **input folder** and the **output folder**.
