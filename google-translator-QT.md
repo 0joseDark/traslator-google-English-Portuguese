@@ -1,4 +1,4 @@
-O script traduz ficheiros `.txt` de uma pasta para outra, usando o **Google Translate** via a biblioteca `googletrans`.
+O script traduz ficheiros `.txt` ou markdown de uma pasta para outra, usando o **Google Translate** via a biblioteca `googletrans`.
 ---
 
 ## ✅ Versão com GUI em PyQt5 (para macOS, Windows e Ubuntu)
